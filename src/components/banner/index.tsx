@@ -11,7 +11,7 @@ export default function Bannner(){
                     onPress={() => console.log('Banner 1')}
                 >
                     <Image 
-                        source={require('../../assets/banner1.jpg')}
+                        source={require('../../assets/banner1.png')}
                         className='w-full h-36 rounded-2xl md:h-60'
                     />
                 </Pressable>
@@ -22,7 +22,7 @@ export default function Bannner(){
                     onPress={() => console.log('Banner 2')}
                 >
                     <Image 
-                        source={require('../../assets/banner2.jpg')}
+                        source={require('../../assets/banner2.png')}
                         className='w-full h-36 rounded-2xl md:h-60'
                     />
                 </Pressable>

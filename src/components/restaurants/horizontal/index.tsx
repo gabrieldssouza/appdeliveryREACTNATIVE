@@ -7,7 +7,7 @@ export default function RestaurantItem({item}: {item: Props}) {
     className='flex flex-col items-center justify-center'
     onPress={() => console.log('Restaurante ' + item.name)}
    >
-    <Image source={{uri: item.image}} className='w-20 h-20 rounded-full' />
+    <Image source={{uri: item.image}} className='w-20 h-20 rounded-xl' />
     <Text className='text-sm mt-2 w-20 text-center leading-2 text-black' numberOfLines={2}>{item.name}</Text>
    </Pressable>
   );

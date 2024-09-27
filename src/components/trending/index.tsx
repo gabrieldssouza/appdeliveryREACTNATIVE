@@ -18,7 +18,7 @@ export function Trending() {
 
     useEffect(() => {
         async function getFoods(){
-            const response = await fetch('http://192.168.1.17:3000/foods');
+            const response = await fetch('https://apifakedelivery.vercel.app/foods');
             const data = await response.json();
             setFoods(data);
         }

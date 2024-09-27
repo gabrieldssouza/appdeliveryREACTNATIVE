@@ -5,20 +5,23 @@ import { Props } from '..';
 
 export default function RestaurantItem({item}: {item: Props}) {
  return (
-   <Pressable className='flex flex-row items-center justify-start gap-2'>
-    <Image 
-        source={{uri: item.image}}
-        className='w-20 h-20 rounded-full'
-    />
+   <View>
+    <Pressable className='flex flex-row items-center justify-start gap-2'>
+        <Image 
+            source={{uri: item.image}}
+            className='w-20 h-20 rounded-xl'
+        />
 
-    <View className='flex gap-2'>
-        <Text className='text-base text-black leading-4 font-bold' numberOfLines={2}>{item.name}</Text>
+        <View className='flex gap-2'>
+            <Text className='text-base text-black leading-4 font-bold' numberOfLines={2}>{item.name}</Text>
 
-        <View className='flex-row items-center gap-1'>
-            <Ionicons name='star' size={14} color='#ca8a04' />
-            <Text className='text-sm'>4.5</Text>
+            <View className='flex-row items-center gap-1'>
+                <Ionicons name='star' size={14} color='#ca8a04' />
+                <Text className='text-sm'>{item.rating}</Text>
+            </View>
         </View>
-    </View>
-   </Pressable>
+    </Pressable>
+    <View className='mt-4 w-full h-0.5 bg-slate-400' />
+   </View>
   );
 }

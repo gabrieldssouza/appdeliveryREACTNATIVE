@@ -2,46 +2,54 @@
     "users": [
       { 
         "id": "1", 
-        "name": "Gabriel", 
+        "name": "Gabriel Souza", 
         "email": "gabriel@gmail.com",
-        "senha": "123456"
+        "senha": "senhadogabriel",
+        "saldo": "0.90"
       },
       {
         "id": "2",
-        "name": "Diego",
+        "name": "Diego Candido",
         "email": "diego@gmail.com",
-        "senha": "654321"  
+        "senha": "senhadodiego",
+        "saldo": "127.23"
       }
     ],
     "restaurants": [
       { 
         "id": "1", 
         "name": "KFC", 
+        "rating": "4.5",
         "image": "https://i.imgur.com/sZ1Jye3.png"
       },
       { 
         "id": "2", 
         "name": "McDonald's", 
+        "rating": "4.7",
         "image": "https://i.imgur.com/su4iB3p.png"
       },
       { 
         "id": "3", 
         "name": "Outback", 
+        "rating": "4.8",
         "image": "https://i.imgur.com/jg3GJVN.png"
       },
       { 
         "id": "4", 
         "name": "Sushi Dev", 
+        "rating": "4.9",
         "image": "https://i.imgur.com/ffYWFBX.png"
       },
       { 
         "id": "5", 
         "name": "Burguer Grill", 
+        "rating": "3.9",
         "image": "https://i.imgur.com/kmQvG2T.png"
       },
       { 
         "id": "6", 
         "name": "Marmitas express", 
+        "rating": "3.5",
         "image": "https://i.imgur.com/uXRuDFD.png"
       }
     ],
