@@ -39,9 +39,9 @@ export default function Login() {
   return (
     <View style={{flex: 1}} className='flex items-center justify-center px-10'>
       <TextInput style={{borderWidth: 1, paddingHorizontal: 10, borderRadius: 5}} className='w-full h-11' placeholder="Email" value={username} onChangeText={setUsername} />
-      <TextInput style={{borderWidth: 1, paddingHorizontal: 10, borderRadius: 5}} className='w-full h-11 mt-3'placeholder="Senhal" value={password} onChangeText={setPassword} secureTextEntry />
+      <TextInput style={{borderWidth: 1, paddingHorizontal: 10, borderRadius: 5}} className='w-full h-11 mt-3'placeholder="Senha" value={password} onChangeText={setPassword} secureTextEntry />
       <TouchableOpacity style={{width: '100%'}} onPress={handleLogin}>
-        <Text style={{textAlign: 'center', borderRadius: 5}} className='bg-red-600 color-white mt-3 p-3'>Login</Text>
+        <Text style={{textAlign: 'center', borderRadius: 5, backgroundColor: '#bd3838'}} className='color-white mt-3 p-3'>Login</Text>
       </TouchableOpacity>
     </View>
   );

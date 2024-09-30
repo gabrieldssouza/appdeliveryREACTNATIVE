@@ -1,16 +1,16 @@
-import React from 'react';
-import { View, TouchableOpacity, Text } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
-import '../styles/global.css'
+import * as SplashScreen from 'expo-splash-screen';
+import '../styles/global.css';
 import Buscar from './buscar';
 import Index from './index';
 import Perfil from './perfil';
 import Login from './login';
 import Register from './register';
-
 
 type AuthScreenNavigationProp = StackNavigationProp<any, any>;
 
@@ -18,11 +18,24 @@ type AuthScreenProps = {
   navigation: AuthScreenNavigationProp;
 };
 
-
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function RootLayout() {
+  useEffect(() => {
+    async function prepare() {
+      try {
+        await SplashScreen.preventAutoHideAsync();
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        await SplashScreen.hideAsync();
+      }
+    }
+
+    prepare();
+  }, []);
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" component={AuthScreen} />
@@ -48,8 +61,8 @@ function HomeTabs() {
             />
           ),
           tabBarLabel: () => null,
-          tabBarActiveTintColor: '#ff0000',
-          tabBarInactiveTintColor: '#ff0000', 
+          tabBarActiveTintColor: '#bd3838',
+          tabBarInactiveTintColor: '#bd3838', 
         }}
       />
       <Tab.Screen 
@@ -64,8 +77,8 @@ function HomeTabs() {
             />
           ),
           tabBarLabel: () => null,
-          tabBarActiveTintColor: '#ff0000', 
-          tabBarInactiveTintColor: '#ff0000', 
+          tabBarActiveTintColor: '#bd3838', 
+          tabBarInactiveTintColor: '#bd3838', 
         }}
       />
       <Tab.Screen 
@@ -80,24 +93,23 @@ function HomeTabs() {
             />
           ),
           tabBarLabel: () => null,
-          tabBarActiveTintColor: '#ff0000', 
-          tabBarInactiveTintColor: '#ff0000', 
+          tabBarActiveTintColor: '#bd3838', 
+          tabBarInactiveTintColor: '#bd3838', 
         }}
       />
     </Tab.Navigator>
   );
 }
 
-  function AuthScreen({ navigation }: AuthScreenProps) {
+function AuthScreen({ navigation }: AuthScreenProps) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} >
-      <Text style={{fontSize: 30, fontWeight: 'bold', color: '#757575'}}>CIMOL</Text>
-      <Text style={{fontSize: 30, marginBottom: 20, fontWeight: 'bold', color: '#ff0000'}}>FOODS</Text>
+      <Image source={require('../assets/foodvermelho.png')} style={{width: 200, height: 150}} resizeMode="contain" />
       <TouchableOpacity style={{width: '80%'}} onPress={() => navigation.navigate('login')}>
-        <Text style={{backgroundColor: 'red', padding: 10, color: 'white', borderRadius: 10, textAlign: 'center', fontSize: 18}}>Login</Text>
+        <Text style={{backgroundColor: '#bd3838', padding: 10, color: 'white', borderRadius: 10, textAlign: 'center', fontSize: 18}}>Login</Text>
       </TouchableOpacity>
       <TouchableOpacity style={{width: '80%', marginTop: 5}} onPress={() => navigation.navigate('register')}>
-        <Text style={{backgroundColor: 'red', padding: 10, color: 'white', borderRadius: 10, textAlign: 'center', fontSize: 18}}>Registro</Text>
+        <Text style={{backgroundColor: '#bd3838', padding: 10, color: 'white', borderRadius: 10, textAlign: 'center', fontSize: 18}}>Registro</Text>
       </TouchableOpacity>
     </View>
   );

@@ -9,12 +9,12 @@ export default function Header() {
         <View className='flex flex-col items-center justify-center'>
           <View className='flex-row items-center justify-center gap-1'>
             <Text className='text-lg font-bold'>Taquara, RS</Text>
-            <Feather name="chevron-down" size={14} color="#FF0000" />
+            <Feather name="chevron-down" size={14} color="#bd3838" />
           </View>
         </View>
 
         <Pressable className='w-10 h-10 flex justify-center items-center'>
-            <Feather name="bell" size={20} color="#FF0000" />
+            <Feather name="bell" size={20} color="#bd3838" />
         </Pressable>
     </View>
   );
