@@ -10,6 +10,7 @@ export interface Props{
     delivery: number;
     rating: number;
     image: string;
+    description: string;
     restaurantId: string;
 }
 

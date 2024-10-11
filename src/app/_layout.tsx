@@ -11,6 +11,7 @@ import Index from './index';
 import Perfil from './perfil';
 import Login from './login';
 import Register from './register';
+import FoodScreen from './food';
 
 type AuthScreenNavigationProp = StackNavigationProp<any, any>;
 
@@ -42,6 +43,11 @@ function RootLayout() {
       <Stack.Screen name="buscar" component={HomeTabs} />
       <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="register" component={Register} />
+      <Stack.Screen 
+        name="food" 
+        component={FoodScreen} 
+        options={{ presentation: 'modal' }} 
+      />
     </Stack.Navigator>
   );
 }
