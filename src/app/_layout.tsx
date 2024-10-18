@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
 import * as SplashScreen from 'expo-splash-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import '../styles/global.css';
 import Buscar from './buscar';
 import Index from './index';
@@ -23,13 +24,22 @@ const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function RootLayout() {
+  const [isUserChecked, setIsUserChecked] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
   useEffect(() => {
     async function prepare() {
       try {
         await SplashScreen.preventAutoHideAsync();
+
+        const user = await AsyncStorage.getItem('user');
+        if (user) {
+          setIsUserLoggedIn(true);
+        }
       } catch (e) {
         console.warn(e);
       } finally {
+        setIsUserChecked(true);
         await SplashScreen.hideAsync();
       }
     }
@@ -37,11 +47,26 @@ function RootLayout() {
     prepare();
   }, []);
 
+  const handleLoginSuccess = () => {
+    setIsUserLoggedIn(true);
+  };
+
+  if (!isUserChecked) {
+    return null;
+  }
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" component={AuthScreen} />
-      <Stack.Screen name="buscar" component={HomeTabs} />
-      <Stack.Screen name="login" component={Login} />
+      {isUserLoggedIn ? (
+        <Stack.Screen name="buscar" component={HomeTabs} />
+      ) : (
+        <Stack.Screen name="index">
+          {props => <AuthScreen {...props} onLoginSuccess={handleLoginSuccess} />}
+        </Stack.Screen>
+      )}
+      <Stack.Screen name="login">
+        {props => <Login {...props} onLoginSuccess={handleLoginSuccess} />}
+      </Stack.Screen>
       <Stack.Screen name="register" component={Register} />
       <Stack.Screen 
         name="food" 
@@ -107,7 +132,7 @@ function HomeTabs() {
   );
 }
 
-function AuthScreen({ navigation }: AuthScreenProps) {
+function AuthScreen({ navigation, onLoginSuccess }: AuthScreenProps & { onLoginSuccess: () => void }) {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} >
       <Image source={require('../assets/foodvermelho.png')} style={{width: 200, height: 150}} resizeMode="contain" />

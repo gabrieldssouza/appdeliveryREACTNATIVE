@@ -12,6 +12,7 @@ const FoodScreen: React.FC = () => {
   const { food } = route.params;
   const [restaurant, setRestaurant] = useState<RestaurantProps | null>(null);
   const [loading, setLoading] = useState(true);
+  const [count, setCount] = useState(1);
 
   useEffect(() => {
     async function fetchRestaurant() {
@@ -37,7 +38,7 @@ const FoodScreen: React.FC = () => {
       <Image source={{ uri: food.image }} style={{ width: '100%', height: 250 }} />
       <View style={{ padding: 16 }}>
         <Text style={{ fontSize: 24, fontWeight: 'bold' }}>{food.name}</Text>
-        <Text className='mt-2' style={{ fontSize: 18 }}>{food.description}</Text>
+        <Text className='mt-2' style={{ fontSize: 14 }}>{food.description}</Text>
         <View className='mt-2 flex flex-row items-center justify-between'>
             <Text style={{ fontSize: 18, color: 'green' }}>R$ {food.price}</Text>
             <View className='flex flex-row items-center gap-2'><Ionicons size={15} name="star"></Ionicons><Text style={{ fontSize: 16 }}>{food.rating}</Text></View>
@@ -48,13 +49,35 @@ const FoodScreen: React.FC = () => {
         <ActivityIndicator size="large" color="#bd3838" />
       ) : (
         restaurant && (
-          <View className='flex flex-row items-center justify-center gap-8' style={{ padding: 5, backgroundColor: '#f8f8f8', borderRadius: 8, margin: 16 }}>
-            <Image source={{ uri: restaurant.image }} style={{ width: 50, height: 50, borderRadius: 8, marginVertical: 8 }} />
+          <View className='flex flex-row items-center justify-between' style={{ padding: 5, borderRadius: 8, marginHorizontal: 16, borderColor: 'grey', borderWidth: 1.5 }}>
+            <Image source={{ uri: restaurant.image }} style={{ width: 50, height: 50, borderRadius: 8, marginVertical: 2 }} />
             <Text style={{ fontSize: 20, fontWeight: 'bold' }}>{restaurant.name}</Text>
             <View className='flex flex-row items-center gap-2'><Ionicons size={15} name="star"></Ionicons><Text style={{ fontSize: 16 }}>{restaurant.rating}</Text></View>
           </View>
         )
       )}
+      <View>
+        <View className='flex flex-row justify-center items-center' style={{margin: 16}}>
+          <View style={{width: '25%', borderColor: '#bd3838', borderWidth: 1.5, borderRadius: 8}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <TouchableOpacity onPress={() => setCount(count > 1 ? count - 1 : 1)} style={{ padding: 10 }}>
+                <Ionicons name="remove-outline" size={20} color="black" />
+              </TouchableOpacity>
+              <Text style={{ fontSize: 18 }}>{count}</Text>
+              <TouchableOpacity onPress={() => setCount(count + 1)} style={{ padding: 10 }}>
+                <Ionicons name="add-outline" size={20} color="#bd3838" />
+              </TouchableOpacity>
+            </View>
+          </View>
+            <TouchableOpacity style={{ backgroundColor: '#bd3838', padding: 10, borderRadius: 8, width: '75%', marginLeft: 2 }}>
+              <View className='flex flex-row'>
+                <Text style={{ color: 'white', fontSize: 18 }}>Adicionar</Text>
+                <Text style={{ fontSize: 18, marginLeft: 'auto', color: 'white' }}>R$ {(food.price * count).toFixed(2)}</Text>
+              </View>
+            </TouchableOpacity>
+            
+        </View>
+      </View>
     </View>
   );
 };

@@ -13,11 +13,11 @@ const statusBarHeight = Constants.statusBarHeight;
 export default function Perfil() {
   return (
     <ScrollView style={{flex: 1}} 
-    className="bg-slate-200"
     showsVerticalScrollIndicator={false}
     >
       <View className="w-full px-4" style={{marginTop: statusBarHeight + 8}}>
         <Header/>
+        <View className="mt-4"></View>
       </View>
 
     </ScrollView>

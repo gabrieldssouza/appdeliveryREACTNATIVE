@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type RootStackParamList = {
   home: undefined;
@@ -19,7 +20,11 @@ interface User {
   senha: string;
 }
 
-export default function Login() {
+interface LoginProps {
+  onLoginSuccess: () => void;
+}
+
+export default function Login({ onLoginSuccess }: LoginProps) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigation = useNavigation<LoginScreenNavigationProp>();
@@ -30,7 +35,9 @@ export default function Login() {
 
     const user = users.find((user: User) => user.email === username && user.senha === password);
     if (user) {
-      navigation.navigate('buscar'); 
+      await AsyncStorage.setItem('user', JSON.stringify(user));
+      onLoginSuccess();
+      navigation.navigate('buscar');
     } else {
       alert('Login falhou');
     }
