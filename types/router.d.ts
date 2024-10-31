@@ -1,4 +1,5 @@
 export interface FoodProps {
+  id: string;
   image: string;
   rating: number;
   price: number;
@@ -8,6 +9,16 @@ export interface FoodProps {
   description: string;
   restaurantId: string;
 }
+
+
+export interface FoodItem {
+  id: string;
+  name: string;
+  image: string;
+  price: number;
+  quantity: number;
+}
+
 
 export interface RestaurantProps {
   id: string;

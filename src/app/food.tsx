@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-na
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
 import { RootStackParamList, RestaurantProps } from '../../types/router';
 import { Ionicons } from '@expo/vector-icons';
+import { useCart } from '../context/CartContext';
 
 type FoodScreenRouteProp = RouteProp<RootStackParamList, 'food'>;
 
@@ -13,6 +14,7 @@ const FoodScreen: React.FC = () => {
   const [restaurant, setRestaurant] = useState<RestaurantProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [count, setCount] = useState(1);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     async function fetchRestaurant() {
@@ -29,6 +31,10 @@ const FoodScreen: React.FC = () => {
 
     fetchRestaurant();
   }, [food.restaurantId]);
+
+  const handleAddToCart = () => {
+    addToCart({ id: food.id, name: food.name, image: food.image, price: food.price, quantity: count });
+  };
 
   return (
     <View style={{ flex: 1, backgroundColor: 'white' }}>
@@ -69,13 +75,12 @@ const FoodScreen: React.FC = () => {
               </TouchableOpacity>
             </View>
           </View>
-            <TouchableOpacity style={{ backgroundColor: '#bd3838', padding: 10, borderRadius: 8, width: '75%', marginLeft: 2 }}>
-              <View className='flex flex-row'>
-                <Text style={{ color: 'white', fontSize: 18 }}>Adicionar</Text>
-                <Text style={{ fontSize: 18, marginLeft: 'auto', color: 'white' }}>R$ {(food.price * count).toFixed(2)}</Text>
-              </View>
-            </TouchableOpacity>
-            
+          <TouchableOpacity onPress={handleAddToCart} style={{ backgroundColor: '#bd3838', padding: 10, borderRadius: 8, width: '75%', marginLeft: 2 }}>
+            <View className='flex flex-row'>
+              <Text style={{ color: 'white', fontSize: 18 }}>Adicionar</Text>
+              <Text style={{ fontSize: 18, marginLeft: 'auto', color: 'white' }}>R$ {(food.price * count).toFixed(2)}</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

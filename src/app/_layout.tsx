@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
+import { CartProvider } from '../context/CartContext';
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import '../styles/global.css';
@@ -13,6 +14,7 @@ import Perfil from './perfil';
 import Login from './login';
 import Register from './register';
 import FoodScreen from './food';
+import CartScreen from './cart';
 
 type AuthScreenNavigationProp = StackNavigationProp<any, any>;
 
@@ -33,6 +35,7 @@ function RootLayout() {
         await SplashScreen.preventAutoHideAsync();
 
         const user = await AsyncStorage.getItem('user');
+        console.log(user);
         if (user) {
           setIsUserLoggedIn(true);
         }
@@ -56,6 +59,7 @@ function RootLayout() {
   }
 
   return (
+    <CartProvider>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       {isUserLoggedIn ? (
         <Stack.Screen name="buscar" component={HomeTabs} />
@@ -73,7 +77,13 @@ function RootLayout() {
         component={FoodScreen} 
         options={{ presentation: 'modal' }} 
       />
+      <Stack.Screen 
+            name="cart" 
+            component={CartScreen} 
+            options={{ presentation: 'modal' }} 
+      />
     </Stack.Navigator>
+    </CartProvider>
   );
 }
 
