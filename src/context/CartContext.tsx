@@ -8,12 +8,16 @@ interface CartContextProps {
   decreaseQuantity: (id: string) => void;
   cartCount: number;
   totalPrice: number;
+  address: string;
+  setAddress: (address: string) => void;
+  getTotalDeliveryTime: () => number;
 }
 
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<FoodItem[]>([]);
+  const [address, setAddress] = useState<string>('Taquara, RS');
 
   const addToCart = (item: FoodItem) => {
     setCart(prevCart => {
@@ -21,29 +25,29 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       if (existingItem) {
         return prevCart.map(cartItem =>
           cartItem.id === item.id
-            ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
             : cartItem
         );
       } else {
-        return [...prevCart, item];
+        return [...prevCart, { ...item, quantity: 1 }];
       }
     });
   };
 
   const increaseQuantity = (id: string) => {
     setCart(prevCart =>
-      prevCart.map(cartItem =>
-        cartItem.id === id ? { ...cartItem, quantity: cartItem.quantity + 1 } : cartItem
+      prevCart.map(item =>
+        item.id === id ? { ...item, quantity: item.quantity + 1 } : item
       )
     );
   };
 
   const decreaseQuantity = (id: string) => {
     setCart(prevCart =>
-      prevCart.map(cartItem =>
-        cartItem.id === id && cartItem.quantity > 1
-          ? { ...cartItem, quantity: cartItem.quantity - 1 }
-          : cartItem
+      prevCart.map(item =>
+        item.id === id && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
       )
     );
   };
@@ -51,8 +55,31 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
   const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
+  const getTotalDeliveryTime = () => {
+    return cart.reduce((total, item) => {
+      if (item.time) {
+        const timeRange = item.time.split('-');
+        const maxTime = parseInt(timeRange[1], 10);
+        return total + maxTime;
+      }
+      return total;
+    }, 0);
+  };
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, increaseQuantity, decreaseQuantity, cartCount, totalPrice }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        increaseQuantity,
+        decreaseQuantity,
+        cartCount,
+        totalPrice,
+        address,
+        setAddress,
+        getTotalDeliveryTime,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { Text, View, ScrollView, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import Constants from "expo-constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../components/header";
@@ -7,9 +7,9 @@ import { useNavigation } from 'expo-router';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 const statusBarHeight = Constants.statusBarHeight;
-export default function Perfil() {
-  
+const { width } = Dimensions.get("window");
 
+export default function Perfil() {
   interface User {
     name: string;
     saldo: number;
@@ -23,7 +23,7 @@ export default function Perfil() {
     index: undefined;
     perfil: undefined;
   };
-  
+
   type PerfilScreenNavigationProp = StackNavigationProp<RootStackParamList, 'perfil'>;
 
   const [user, setUser] = useState<User | null>(null);
@@ -33,7 +33,6 @@ export default function Perfil() {
       const userData = await AsyncStorage.getItem('user');
       if (userData) {
         setUser(JSON.parse(userData));
-        console.log(user);
       }
     };
 
@@ -49,23 +48,73 @@ export default function Perfil() {
   };
 
   return (
-    <ScrollView style={{flex: 1}} showsVerticalScrollIndicator={false}>
-      <View className="w-full px-4" style={{marginTop: statusBarHeight + 8}}>
-        <Header/>
-        <View className="mt-4">
+    <ScrollView style={{ flex: 1, backgroundColor: '#f8f9fa' }} showsVerticalScrollIndicator={false}>
+      <View style={[styles.container, { marginTop: statusBarHeight + 8 }]}>
+        <Header />
+        <View style={styles.userInfoContainer}>
           {user ? (
-            <View>
-              <Text className="text-xl font-bold">{user.name}</Text>
-              <Text className="text-xl text-gray-500">R$ {user.saldo}</Text>
+            <View style={styles.userDetails}>
+              <Text style={styles.userName}>{user.name}</Text>
+              <Text style={styles.userBalance}>R$ {user.saldo}</Text>
             </View>
           ) : (
-            <Text>Carregando...</Text>
+            <Text style={styles.loadingText}>Carregando...</Text>
           )}
         </View>
-        <TouchableOpacity onPress={handleRemoveAccount}>
-          <Text className="text-red-500">Sair da conta</Text>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleRemoveAccount}>
+          <Text style={styles.logoutText}>Sair da conta</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 16,
+    width: '100%',
+  },
+  userInfoContainer: {
+    marginTop: 16,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 12,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  userDetails: {
+    alignItems: 'center',
+  },
+  userName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  userBalance: {
+    fontSize: 20,
+    color: '#555',
+    marginTop: 8,
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#888',
+  },
+  logoutButton: {
+    marginTop: 24,
+    backgroundColor: '#bd3838',
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+    width: width * 0.9,
+    alignSelf: 'center',
+  },
+  logoutText: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+});

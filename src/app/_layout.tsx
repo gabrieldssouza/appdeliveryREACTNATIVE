@@ -15,6 +15,8 @@ import Login from './login';
 import Register from './register';
 import FoodScreen from './food';
 import CartScreen from './cart';
+import CheckoutScreen from './checkout';
+import OrderScreen from './order';
 
 type AuthScreenNavigationProp = StackNavigationProp<any, any>;
 
@@ -82,6 +84,8 @@ function RootLayout() {
             component={CartScreen} 
             options={{ presentation: 'modal' }} 
       />
+      <Stack.Screen name="checkout" component={CheckoutScreen} />
+      <Stack.Screen name="order" component={OrderScreen} />
     </Stack.Navigator>
     </CartProvider>
   );
@@ -113,6 +117,22 @@ function HomeTabs() {
           tabBarIcon: ({ focused, color, size }) => (
             <Ionicons 
               name={focused ? "search" : "search-outline"} 
+              color={color} 
+              size={size} 
+            />
+          ),
+          tabBarLabel: () => null,
+          tabBarActiveTintColor: '#bd3838', 
+          tabBarInactiveTintColor: '#bd3838', 
+        }}
+      />
+      <Tab.Screen 
+        name="orders" 
+        component={OrderScreen} 
+        options={{
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons 
+              name={focused ? "receipt" : "receipt-outline"} 
               color={color} 
               size={size} 
             />

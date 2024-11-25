@@ -4,10 +4,11 @@ import { useCart } from '../context/CartContext';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { FoodItem } from '../../types/router';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const CartScreen: React.FC = () => {
   const { cart, increaseQuantity, decreaseQuantity, totalPrice } = useCart();
-  const navigation = useNavigation();
+  const navigation = useNavigation() as StackNavigationProp<any>;
 
   const renderItem = ({ item }: { item: FoodItem }) => (
     <View style={styles.itemContainer}>
@@ -44,7 +45,7 @@ const CartScreen: React.FC = () => {
       />
       <View style={styles.footer}>
         <Text style={styles.totalPrice}>Total: R$ {totalPrice.toFixed(2)}</Text>
-        <TouchableOpacity style={styles.buyButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('checkout')} style={styles.buyButton}>
           <Text style={styles.buyButtonText}>Comprar</Text>
         </TouchableOpacity>
       </View>
@@ -83,9 +84,6 @@ const styles = StyleSheet.create({
   itemDetails: {
     marginLeft: 16,
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
   },
   dados: {
     flexDirection: 'column',
