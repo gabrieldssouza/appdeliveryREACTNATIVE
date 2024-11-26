@@ -17,6 +17,7 @@ import FoodScreen from './food';
 import CartScreen from './cart';
 import CheckoutScreen from './checkout';
 import OrderScreen from './order';
+import RestaurantScreen from './restaurant';
 
 type AuthScreenNavigationProp = StackNavigationProp<any, any>;
 
@@ -77,6 +78,11 @@ function RootLayout() {
       <Stack.Screen 
         name="food" 
         component={FoodScreen} 
+        options={{ presentation: 'modal' }} 
+      />
+      <Stack.Screen 
+        name="restaurant" 
+        component={RestaurantScreen}
         options={{ presentation: 'modal' }} 
       />
       <Stack.Screen 
@@ -166,12 +172,10 @@ function AuthScreen({ navigation, onLoginSuccess }: AuthScreenProps & { onLoginS
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}} >
       <Image source={require('../assets/foodvermelho.png')} style={{width: 200, height: 150}} resizeMode="contain" />
-      <TouchableOpacity style={{width: '80%'}} onPress={() => navigation.navigate('login')}>
-        <Text style={{backgroundColor: '#bd3838', padding: 10, color: 'white', borderRadius: 10, textAlign: 'center', fontSize: 18}}>Login</Text>
+      <TouchableOpacity style={{width: '50%', marginTop: 5}} onPress={() => navigation.navigate('register')}>
+        <Text style={{backgroundColor: '#bd3838', padding: 10, color: 'white', borderRadius: 10, textAlign: 'center', fontSize: 18}}>Cadastre-se</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={{width: '80%', marginTop: 5}} onPress={() => navigation.navigate('register')}>
-        <Text style={{backgroundColor: '#bd3838', padding: 10, color: 'white', borderRadius: 10, textAlign: 'center', fontSize: 18}}>Registro</Text>
-      </TouchableOpacity>
+        <Text style={{fontSize: 15}}>Já possui um Login?<TouchableOpacity onPress={() => navigation.navigate('login')}><Text style={{color: '#bd3838', fontSize: 15}}> Entrar</Text></TouchableOpacity></Text>
     </View>
   );
 }

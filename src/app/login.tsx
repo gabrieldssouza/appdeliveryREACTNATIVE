@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -45,6 +45,7 @@ export default function Login({ onLoginSuccess }: LoginProps) {
 
   return (
     <View style={{flex: 1}} className='flex items-center justify-center px-10'>
+      <Image source={require('../assets/foodvermelho.png')} style={{width: 200, height: 200, resizeMode: 'contain'}} />
       <TextInput style={{borderWidth: 1, paddingHorizontal: 10, borderRadius: 5}} className='w-full h-11' placeholder="Email" value={username} onChangeText={setUsername} />
       <TextInput style={{borderWidth: 1, paddingHorizontal: 10, borderRadius: 5}} className='w-full h-11 mt-3'placeholder="Senha" value={password} onChangeText={setPassword} secureTextEntry />
       <TouchableOpacity style={{width: '100%'}} onPress={handleLogin}>

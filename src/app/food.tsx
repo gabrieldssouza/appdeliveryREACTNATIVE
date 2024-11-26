@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, Image, TouchableOpacity, ActivityIndicator, TextInput } from 'react-native';
 import { RouteProp, useRoute, useNavigation } from '@react-navigation/native';
 import { RootStackParamList, RestaurantProps } from '../../types/router';
 import { Ionicons } from '@expo/vector-icons';
@@ -33,7 +33,10 @@ const FoodScreen: React.FC = () => {
   }, [food.restaurantId]);
 
   const handleAddToCart = () => {
-    addToCart({ id: food.id, name: food.name, image: food.image, price: food.price, quantity: count });
+    addToCart({
+      id: food.id, name: food.name, image: food.image, price: food.price, quantity: count,
+      time: ''
+    });
   };
 
   return (
@@ -62,6 +65,15 @@ const FoodScreen: React.FC = () => {
           </View>
         )
       )}
+      <View style={{ padding: 16 }}>
+        <Text style={{ fontSize: 16, fontWeight: 'bold' }}>Observações:</Text>
+        <TextInput
+          style={{ height: 100, borderColor: 'gray', borderWidth: 1, borderRadius: 8, marginTop: 8, padding: 8 }}
+          multiline
+          numberOfLines={4}
+          placeholder="Digite suas observações aqui..."
+        />
+      </View>
       <View>
         <View className='flex flex-row justify-center items-center' style={{margin: 16}}>
           <View style={{width: '25%', borderColor: '#bd3838', borderWidth: 1.5, borderRadius: 8}}>

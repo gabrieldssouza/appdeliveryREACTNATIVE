@@ -35,4 +35,7 @@ export type RootStackParamList = {
   login: undefined;
   register: undefined;
   food: { food: FoodProps };
+  restaurant: { restaurant: RestaurantProps };
 };
+
+

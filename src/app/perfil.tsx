@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Header from "../components/header";
 import { useNavigation } from 'expo-router';
 import { StackNavigationProp } from '@react-navigation/stack';
+import {Ionicons} from '@expo/vector-icons';
 
 const statusBarHeight = Constants.statusBarHeight;
 const { width } = Dimensions.get("window");
@@ -53,13 +54,34 @@ export default function Perfil() {
         <Header />
         <View style={styles.userInfoContainer}>
           {user ? (
-            <View style={styles.userDetails}>
-              <Text style={styles.userName}>{user.name}</Text>
-              <Text style={styles.userBalance}>R$ {user.saldo}</Text>
-            </View>
+        <View>
+          <Text style={styles.userName}>{user.name}</Text>
+          <Text style={styles.userBalance}>R$ {user.saldo}</Text>
+        </View>
           ) : (
-            <Text style={styles.loadingText}>Carregando...</Text>
+        <Text style={styles.loadingText}>Carregando...</Text>
           )}
+        </View>
+
+        <View>
+          <TouchableOpacity style={styles.menuOption}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Ionicons name="mail-outline" size={24} color="#333" />
+          <Text style={styles.menuOptionText}> Mensagens</Text>
+        </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuOption}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Ionicons name="notifications-outline" size={24} color="#333" />
+          <Text style={styles.menuOptionText}> Notificações</Text>
+        </View>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.menuOption}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Ionicons name="settings-outline" size={24} color="#333" />
+          <Text style={styles.menuOptionText}> Configurações</Text>
+        </View>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity style={styles.logoutButton} onPress={handleRemoveAccount}>
           <Text style={styles.logoutText}>Sair da conta</Text>
@@ -76,7 +98,6 @@ const styles = StyleSheet.create({
   },
   userInfoContainer: {
     marginTop: 16,
-    alignItems: 'center',
     backgroundColor: 'white',
     padding: 20,
     borderRadius: 12,
@@ -85,9 +106,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-  },
-  userDetails: {
-    alignItems: 'center',
   },
   userName: {
     fontSize: 24,
@@ -103,17 +121,22 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#888',
   },
-  logoutButton: {
-    marginTop: 24,
-    backgroundColor: '#bd3838',
+  menuOption: {
     paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  menuOptionText: {
+    fontSize: 18,
+    color: '#333',
+  },
+  logoutButton: {
+    marginTop: 10,
     width: width * 0.9,
     alignSelf: 'center',
   },
   logoutText: {
-    color: 'white',
+    color: '#bd3838',
     fontSize: 18,
     fontWeight: 'bold',
   },
